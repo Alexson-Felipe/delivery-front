@@ -1,1 +1,41 @@
-<p>cliente works!</p>
+<div class="grid">
+  <div class="cadastro-tabela">
+    <form class="campo-cadastro" [formGroup]="form" (ngSubmit)="cadastrar()">
+      <h1 class="titulo-cadastro">CADASTRAR CLIENTE</h1>
+      <input
+        formControlName="nome"
+        placeholder="Nome"
+        type="text"
+        maxlength="64"
+      />
+      <input
+        formControlName="cpf"
+        placeholder="Cpf"
+        type="text"
+        maxlength="11"
+      />
+      <input formControlName="senha" placeholder="Senha" type="password" />
+      <button type="submit" [disabled]="!form.valid">Cadastrar</button>
+    </form>
+  </div>
+
+  <div class="cadastro-tabela">
+    <table class="tabela">
+      <tr>
+        <th>NOME</th>
+        <th>CPF</th>
+        <th>PONTOS</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.nome }}</td>
+        <td>{{ cliente.cpf }}</td>
+        <td>{{ cliente.pontos }}</td>
+        <td>
+          <button>Editar</button>
+          <button>Excluir</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
