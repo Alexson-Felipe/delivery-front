@@ -2,5 +2,5 @@ export interface Produto {
   id: string;
   nome: string;
   preco: string;
-  tipoProduto: string;
+  tipo: string;
 }

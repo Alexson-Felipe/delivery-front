@@ -1,19 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html,
 body {
-  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: rgb(255, 255, 255)
-
-
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgb(255, 255, 255);
 }
 
-.grid{
-
+.grid {
   display: flex;
   flex-flow: row wrap;
   margin-top: 90px;
-
 
   .cadastro-tabela {
     text-align: center;
@@ -31,58 +31,52 @@ body {
       border-top: solid 1px #333;
     }
 
-  .tabela {
-    tr,
-    th,
-    td {
-
-      border-bottom: solid 5px rgb(234, 79, 71);
-      &:hover {
-        border-bottom: 5px rgb(198, 67, 61) solid ;
+    .tabela {
+      tr,
+      th,
+      td {
+        border-bottom: solid 5px rgb(234, 79, 71);
+        &:hover {
+          border-bottom: 5px rgb(198, 67, 61) solid;
+        }
+      }
+      th,
+      td {
+        padding: 3px 6px;
       }
     }
-    th,
-    td {
-      padding: 3px 6px;
+  }
+
+  .campo-cadastro {
+    padding: 10px 0;
+    border: solid 1px #ccc;
+    width: 450px;
+    border-radius: 1px;
+    box-shadow: 0 0 6px #ccc;
+    background-color: rgb(234, 79, 71);
+    border-bottom: 5px rgb(198, 67, 61) solid;
+    input {
+      padding: 20px 10px;
+      border-radius: 6px;
+      border: solid 1px #444;
+      width: 400px;
+      margin: 10px auto;
+      display: block;
+      padding: 6px;
+      font-size: 18px;
+    }
+    .ng-touched.ng-invalid {
+      border-bottom: solid 3px rgb(172, 10, 10);
+      color: rgb(172, 10, 10);
+    }
+
+    .titulo-cadastro {
+      font-size: 25px;
+      color: white;
+      font-family: "Titan One", cursive;
     }
   }
-
 }
-
-
-.campo-cadastro {
-  padding: 10px 0;
-  border: solid 1px #ccc;
-  width: 450px;
-  border-radius: 1px;
-  box-shadow: 0 0 6px #ccc;
-  background-color: rgb(234, 79, 71);
-  border-bottom: 5px rgb(198, 67, 61) solid ;
-  input {
-    padding: 20px 10px;
-    border-radius: 6px;
-    border: solid 1px #444;
-    width: 400px;
-    margin: 10px auto;
-    display: block;
-    padding: 6px;
-    font-size: 18px;
-  }
-  .ng-touched.ng-invalid {
-    border-bottom: solid 3px rgb(172, 10, 10);
-    color: rgb(172, 10, 10);
-  }
-
-  .titulo-cadastro{
-    font-size: 25px;
-    color: white;
-    font-family: 'Titan One', cursive;
-  }
-}
-}
-
-
-
 
 table {
   table-layout: auto;
@@ -90,5 +84,3 @@ table {
   margin-bottom: 0.5em;
   text-align: center;
 }
-
-

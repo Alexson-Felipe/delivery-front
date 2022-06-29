@@ -1,28 +1,46 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>HTML CSS JS</title>
-  </head>
-  <body>
+<div class="grid">
+  <div class="cadastro-tabela">
+    <form class="campo-cadastro" [formGroup]="form" (ngSubmit)="cadastrar()">
+      <h1 class="titulo-cadastro">CADASTRAR PRODUTO</h1>
+      <input
+        formControlName="nome"
+        placeholder="Nome"
+        type="text"
+        maxlength="64"
+      />
+      <input
+        formControlName="preco"
+        placeholder="Preço"
+        type="text"
+        maxlength="6"
+      />
+      <select formControlName="tipo">
+        <option value="BELEZA_PERFUMARIA">Perfumaria</option>
+        <option value="MERCEARIA">Mercearia</option>
+        <option value="HIGIENE">Higiene</option>
+      </select>
 
-    <div class="linha">
-      <div class="coluna-50" style="background-color: #66ffff">Conteúdo A</div>
-      <div class="coluna-50" style="background-color: #ccffff">Conteúdo B</div>
-    </div>
+      <button type="submit" [disabled]="!form.valid">Cadastrar</button>
+    </form>
+  </div>
 
-    <div class="linha">
-      <div class="coluna-33" style="background-color: #66ffff">Conteúdo A</div>
-      <div class="coluna-33" style="background-color: #ccffff">Conteúdo B</div>
-      <div class="coluna-33" style="background-color: #66ffff">Conteúdo C</div>
-    </div>
-
-    <div class="linha">
-       <div class="coluna-20" style="background-color: #66ffff">Conteúdo A</div>
-       <div class="coluna-20" style="background-color: #ccffff">Conteúdo B</div>
-       <div class="coluna-20" style="background-color: #66ffff">Conteúdo C</div>
-       <div class="coluna-20" style="background-color: #ccffff">Conteúdo D</div>
-       <div class="coluna-20" style="background-color: #66ffff">Conteúdo D</div>
-    </div>
-
-  </body>
-</html>
+  <div class="cadastro-tabela">
+    <table class="tabela">
+      <tr>
+        <th>NOME</th>
+        <th>PREÇO</th>
+        <th>TIPO</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.nome }}</td>
+        <td>{{ produto.preco | currency: "USD" }}</td>
+        <td>{{ produto.tipo }}</td>
+        <td>
+          <button (click)="editar(produto)">Editar</button>
+          <button (click)="apagar(produto)">Excluir</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
