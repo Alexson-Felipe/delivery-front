@@ -21,7 +21,7 @@ export class ClienteComponent implements OnInit {
     id: new FormControl(null),
     nome: new FormControl(null, [Validators.required, Validators.minLength(2)]),
     cpf: new FormControl(null, [Validators.required, Validators.minLength(11)]),
-    senha: new FormControl(null, [Validators.required]),
+    //senha: new FormControl(null, [Validators.required]),
   });
 
   constructor(
@@ -66,7 +66,7 @@ export class ClienteComponent implements OnInit {
     this.form.controls['id'].setValue(cliente.id);
     this.form.controls['nome'].setValue(cliente.nome);
     this.form.controls['cpf'].setValue(cliente.cpf);
-    this.form.controls['senha'].setValue(cliente.senha);
+    //this.form.controls['senha'].setValue(cliente.senha);
   }
 
   apagar(cliente: Cliente): void {

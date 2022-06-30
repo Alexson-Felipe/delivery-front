@@ -14,20 +14,20 @@
         type="text"
         maxlength="11"
       />
-      <input formControlName="senha" placeholder="Senha" type="password" />
+      <!-- <input formControlName="senha" placeholder="Senha" type="password" />-->
       <button type="submit" [disabled]="!form.valid">Cadastrar</button>
     </form>
   </div>
 
   <div class="cadastro-tabela">
-    <table class="tabela">
-      <tr>
+    <table>
+      <tr class="tabela">
         <th>NOME</th>
         <th>CPF</th>
         <th>PONTOS</th>
         <th></th>
       </tr>
-      <tr *ngFor="let cliente of clientes">
+      <tr *ngFor="let cliente of clientes" class="subTabela">
         <td>{{ cliente.nome }}</td>
         <td>{{ cliente.cpf }}</td>
         <td>{{ cliente.pontos }}</td>

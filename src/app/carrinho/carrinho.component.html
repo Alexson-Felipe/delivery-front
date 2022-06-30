@@ -17,19 +17,18 @@
   <div class="cadastro-tabela">
     <table>
       <tr class="tabela">
-        <th>CLIENTE / NOME PRODUTO</th>
-        <th>STATUS / PREÇO</th>
-        <th>TOTAL / TIPO</th>
+        <th>CLIENTE</th>
+        <th>STATUS</th>
+        <th>TOTAL</th>
         <th></th>
       </tr>
 
       <tr *ngFor="let carrinho of carrinhos">
         <td>
           {{ carrinho.cliente.nome }}
-
           <tr>
-            <th></th>
-            <!--tipo-->
+            <th>NOME PRODUTO</th>
+            <!--nome-->
           </tr>
 
           <tr *ngFor="let produto of carrinho.produtos">
@@ -37,25 +36,27 @@
               {{ produto.nome }}
             </td>
           </tr>
+          <hr />
         </td>
 
         <td>
           {{ carrinho.status }}
           <tr>
-            <th></th>
+            <th>PREÇO</th>
             <!--PREÇO-->
           </tr>
           <tr *ngFor="let produto of carrinho.produtos">
             <td>
-              <span> {{ produto.preco }}</span>
+              {{ produto.preco }}
             </td>
           </tr>
+          <hr />
         </td>
 
         <td>
           {{ carrinho.total | currency: "BRL" }}
           <tr>
-            <th></th>
+            <th>TIPO</th>
             <!--tipo-->
           </tr>
           <tr *ngFor="let produto of carrinho.produtos">
@@ -63,31 +64,53 @@
               {{ produto.tipo }}
             </td>
           </tr>
+          <hr />
         </td>
 
         <td>
           <button
+            class="imagemButton"
             *ngIf="
               carrinho.status === 'VAZIO' ||
               carrinho.status === 'AGUARDANDO_PAGAMENTO'
             "
             (click)="mostrarModal(carrinho)"
           >
-            ADICIONAR
+            <img
+              src="../../assets/cart-shopping-solid.svg"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
           </button>
 
           <button
-            *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
-            (click)="pagar(carrinho)"
+            class="imagemButton"
+            *ngIf="
+              carrinho.status === 'VAZIO' ||
+              carrinho.status === 'AGUARDANDO_PAGAMENTO'
+            "
+            (click)="pagar()"
             (click)="apagar(carrinho)"
           >
-            LIMPAR
+            <img
+              src="../../assets/trash-can-solid.svg"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
           </button>
           <button
+            class="imagemButton"
             *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
-            (click)="pagar(carrinho)"
+            (click)="mostrarModalPagar(carrinho)"
           >
-            PAGAR
+            <img
+              src="../../assets/money-bill-1-wave-solid.svg"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
           </button>
         </td>
       </tr>
@@ -102,11 +125,28 @@
   >
     <h1 class="titulo-cadastro-modal">ADICIONAR PRODUTO</h1>
     <select formControlName="idProduto">
-      <option *ngFor="let item of produtos" value="{{ item.id }}">
-        {{ item.nome }}
-      </option>
+      <optgroup label="Produtos">
+        <option *ngFor="let item of produtos" value="{{ item.id }}">
+          {{ item.nome }}
+        </option>
+      </optgroup>
     </select>
     <button type="submit" [disabled]="!formAddProduto.valid">Adicionar</button>
     <button type="button" (click)="fecharModal()">Cancelar</button>
+  </form>
+
+  <form
+    *ngIf="formPagar.controls['id'].value && modalPagar"
+    class="modal"
+    [formGroup]="formPagar"
+    (ngSubmit)="pagar()"
+  >
+    <h1 class="titulo-cadastro-modal">PAGAMENTO</h1>
+    <select formControlName="formaPagamentoEnum">
+      <option value="CREDITO">CREDITO</option>
+      <option value="DEBITO">DEBITO</option>
+    </select>
+    <button type="submit" [disabled]="!formPagar.valid">Pagar</button>
+    <button type="button" (click)="fecharModalPagar()">Cancelar</button>
   </form>
 </div>

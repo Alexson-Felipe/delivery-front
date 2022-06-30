@@ -1,5 +1,3 @@
-import { Produto } from './../domain/produto';
-import { ProdutoService } from './../service/produto.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,13 +5,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { Carrinho } from '../domain/carrinho';
 import { Cliente } from '../domain/cliente';
-import { CarrinhoModel } from '../model/carrinho-model';
 import { ClienteModel } from '../model/cliente-model';
 import { CarrinhoService } from '../service/carrinho.service';
 import { ClienteService } from '../service/cliente.service';
-import { identifierName } from '@angular/compiler';
+import { Produto } from './../domain/produto';
+import { ProdutoService } from './../service/produto.service';
 
 @Component({
   selector: 'app-carrinho',
@@ -21,13 +20,20 @@ import { identifierName } from '@angular/compiler';
   styleUrls: ['./carrinho.component.scss'],
 })
 export class CarrinhoComponent implements OnInit {
+  produto: Produto | undefined;
   carrinhos: Carrinho[] = [];
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
   modal: boolean = false;
+  modalPagar: boolean = false;
 
   form: FormGroup = this.formBuilder.group({
     idCliente: new FormControl('', [Validators.required]),
+  });
+
+  formPagar: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    formaPagamentoEnum: new FormControl('', [Validators.required]),
   });
 
   formAddProduto: FormGroup = this.formBuilder.group({
@@ -88,6 +94,26 @@ export class CarrinhoComponent implements OnInit {
     this.formAddProduto.reset();
   }
 
+  ativarModal(): void {
+    this.modal = true;
+    this.formAddProduto.reset();
+  }
+
+  mostrarModalPagar(carrinho: Carrinho): void {
+    this.ativarModalPagar();
+    this.formPagar.controls['id'].setValue(carrinho.id);
+  }
+
+  fecharModalPagar(): void {
+    this.modal = false;
+    this.formPagar.reset();
+  }
+
+  ativarModalPagar(): void {
+    this.modalPagar = true;
+    this.formPagar.reset();
+  }
+
   add(): void {
     if (this.formAddProduto.valid) {
       const idCarrinho = this.formAddProduto.controls['id'].value;
@@ -102,12 +128,28 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
-  ativarModal(): void {
-    this.modal = true;
-    this.formAddProduto.reset();
+  apagar(carrinho: Carrinho): void {
+    this.carrinhoService.remover(carrinho.id).subscribe((domain: Carrinho) => {
+      if (domain.id) {
+        this.consultarCarrinhos();
+        this.form.reset();
+      }
+    });
   }
 
-  apagar(carrinho: Carrinho): void {}
+  pagar(): void {
+    if (this.formPagar.valid) {
+      const idCarrinho = this.formPagar.controls['id'].value;
+      console.log(idCarrinho);
+      const formaPagamentoEnum =
+        this.formPagar.controls['formaPagamentoEnum'].value;
 
-  pagar(carrinho: Carrinho): void {}
+      this.carrinhoService
+        .pagar(idCarrinho, formaPagamentoEnum)
+        .subscribe(() => {
+          this.consultarCarrinhos();
+          this.formPagar.reset(); //VERIFICAR ISSO
+        });
+    }
+  }
 }

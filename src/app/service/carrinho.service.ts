@@ -26,6 +26,12 @@ export class CarrinhoService {
     });
   }
 
+  pagar(id: string, formaPagamentoEnum: string): Observable<Carrinho> {
+    return this.http.put<Carrinho>(this.url + 'pagar/' + id, {
+      formaPagamentoEnum: formaPagamentoEnum,
+    });
+  }
+
   consultar(): Observable<Carrinho[]> {
     return this.http.get<Carrinho[]>(this.url + 'consultar');
   }
