@@ -1,0 +1,15 @@
+.modal {
+  position: absolute;
+  top: 400px;
+  left: 15vw;
+  background-color: rgb(234, 79, 71);
+  padding: 50px;
+  border-bottom: 5px rgb(198, 67, 61) solid;
+
+  .titulo-cadastro-modal {
+    color: white;
+    font-size: 20px;
+    font-family: "Titan One", cursive;
+    text-align: center;
+  }
+}

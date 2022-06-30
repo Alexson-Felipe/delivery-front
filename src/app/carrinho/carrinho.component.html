@@ -28,9 +28,11 @@
           {{ carrinho.cliente.nome }}
 
           <tr>
-            <th></th><!--tipo-->
+            <th></th>
+            <!--tipo-->
           </tr>
-          <tr *ngFor="let produto of produtos">
+
+          <tr *ngFor="let produto of carrinho.produtos">
             <td>
               {{ produto.nome }}
             </td>
@@ -40,11 +42,12 @@
         <td>
           {{ carrinho.status }}
           <tr>
-            <th></th><!--PREÇO-->
+            <th></th>
+            <!--PREÇO-->
           </tr>
-          <tr *ngFor="let produto of produtos">
+          <tr *ngFor="let produto of carrinho.produtos">
             <td>
-              <span> {{produto.preco}}</span>
+              <span> {{ produto.preco }}</span>
             </td>
           </tr>
         </td>
@@ -52,9 +55,10 @@
         <td>
           {{ carrinho.total | currency: "BRL" }}
           <tr>
-            <th></th><!--tipo-->
+            <th></th>
+            <!--tipo-->
           </tr>
-          <tr *ngFor="let produto of produtos">
+          <tr *ngFor="let produto of carrinho.produtos">
             <td>
               {{ produto.tipo }}
             </td>
@@ -91,16 +95,18 @@
   </div>
 
   <form
-    *ngIf="formAddProduto.controls['id'].value"
+    *ngIf="formAddProduto.controls['id'].value && modal"
     class="modal"
     [formGroup]="formAddProduto"
     (ngSubmit)="add()"
   >
+    <h1 class="titulo-cadastro-modal">ADICIONAR PRODUTO</h1>
     <select formControlName="idProduto">
       <option *ngFor="let item of produtos" value="{{ item.id }}">
         {{ item.nome }}
       </option>
     </select>
     <button type="submit" [disabled]="!formAddProduto.valid">Adicionar</button>
+    <button type="button" (click)="fecharModal()">Cancelar</button>
   </form>
 </div>

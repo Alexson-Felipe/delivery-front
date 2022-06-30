@@ -13,6 +13,7 @@ import { CarrinhoModel } from '../model/carrinho-model';
 import { ClienteModel } from '../model/cliente-model';
 import { CarrinhoService } from '../service/carrinho.service';
 import { ClienteService } from '../service/cliente.service';
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-carrinho',
@@ -23,6 +24,7 @@ export class CarrinhoComponent implements OnInit {
   carrinhos: Carrinho[] = [];
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
+  modal: boolean = false;
 
   form: FormGroup = this.formBuilder.group({
     idCliente: new FormControl('', [Validators.required]),
@@ -77,7 +79,13 @@ export class CarrinhoComponent implements OnInit {
   }
 
   mostrarModal(carrinho: Carrinho): void {
+    this.ativarModal();
     this.formAddProduto.controls['id'].setValue(carrinho.id);
+  }
+
+  fecharModal(): void {
+    this.modal = false;
+    this.formAddProduto.reset();
   }
 
   add(): void {
@@ -92,6 +100,11 @@ export class CarrinhoComponent implements OnInit {
           this.formAddProduto.reset(); //VERIFICAR ISSO
         });
     }
+  }
+
+  ativarModal(): void {
+    this.modal = true;
+    this.formAddProduto.reset();
   }
 
   apagar(carrinho: Carrinho): void {}
