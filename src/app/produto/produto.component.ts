@@ -16,6 +16,7 @@ import { ProdutoService } from '../service/produto.service';
 })
 export class ProdutoComponent implements OnInit {
   produtos: Produto[] = [];
+  controlador: boolean = true;
 
   form: FormGroup = this.formBuilder.group({
     id: new FormControl(null),

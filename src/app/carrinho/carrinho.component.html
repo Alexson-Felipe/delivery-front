@@ -1,11 +1,13 @@
 <div class="grid">
   <div class="cadastro-tabela">
     <form class="campo-cadastro" [formGroup]="form" (ngSubmit)="cadastrar()">
-      <h1 class="titulo-cadastro">CADASTRAR PRODUTO</h1>
-      <select formControlName="tipo">
-        <option value="BELEZA_PERFUMARIA">Perfumaria</option>
-        <option value="MERCEARIA">Mercearia</option>
-        <option value="HIGIENE">Higiene</option>
+      <h1 class="titulo-cadastro">CADASTRAR CARRINHO</h1>
+
+      <select formControlName="idCliente">
+        <option value="">Selecione um Cliente</option>
+        <option *ngFor="let cliente of clientes" value="{{ cliente.id }}">
+          {{ cliente.nome }}
+        </option>
       </select>
 
       <button type="submit" [disabled]="!form.valid">Cadastrar</button>
@@ -13,22 +15,92 @@
   </div>
 
   <div class="cadastro-tabela">
-    <table class="tabela">
-      <tr>
-        <th>NOME</th>
-        <th>PREÇO</th>
-        <th>TIPO</th>
+    <table>
+      <tr class="tabela">
+        <th>CLIENTE / NOME PRODUTO</th>
+        <th>STATUS / PREÇO</th>
+        <th>TOTAL / TIPO</th>
         <th></th>
       </tr>
+
       <tr *ngFor="let carrinho of carrinhos">
-        <td>{{ carrinho.nome }}</td>
-        <td>{{ carrinho.preco | currency: "USD" }}</td>
-        <td>{{ carrinho.tipo }}</td>
         <td>
-          <button (click)="editar(carrinho)">Editar</button>
-          <button (click)="apagar(carrinho)">Excluir</button>
+          {{ carrinho.cliente.nome }}
+
+          <tr>
+            <th></th><!--tipo-->
+          </tr>
+          <tr *ngFor="let produto of produtos">
+            <td>
+              {{ produto.nome }}
+            </td>
+          </tr>
+        </td>
+
+        <td>
+          {{ carrinho.status }}
+          <tr>
+            <th></th><!--PREÇO-->
+          </tr>
+          <tr *ngFor="let produto of produtos">
+            <td>
+              <span> {{produto.preco}}</span>
+            </td>
+          </tr>
+        </td>
+
+        <td>
+          {{ carrinho.total | currency: "BRL" }}
+          <tr>
+            <th></th><!--tipo-->
+          </tr>
+          <tr *ngFor="let produto of produtos">
+            <td>
+              {{ produto.tipo }}
+            </td>
+          </tr>
+        </td>
+
+        <td>
+          <button
+            *ngIf="
+              carrinho.status === 'VAZIO' ||
+              carrinho.status === 'AGUARDANDO_PAGAMENTO'
+            "
+            (click)="mostrarModal(carrinho)"
+          >
+            ADICIONAR
+          </button>
+
+          <button
+            *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
+            (click)="pagar(carrinho)"
+            (click)="apagar(carrinho)"
+          >
+            LIMPAR
+          </button>
+          <button
+            *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
+            (click)="pagar(carrinho)"
+          >
+            PAGAR
+          </button>
         </td>
       </tr>
     </table>
   </div>
+
+  <form
+    *ngIf="formAddProduto.controls['id'].value"
+    class="modal"
+    [formGroup]="formAddProduto"
+    (ngSubmit)="add()"
+  >
+    <select formControlName="idProduto">
+      <option *ngFor="let item of produtos" value="{{ item.id }}">
+        {{ item.nome }}
+      </option>
+    </select>
+    <button type="submit" [disabled]="!formAddProduto.valid">Adicionar</button>
+  </form>
 </div>
