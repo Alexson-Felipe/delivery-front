@@ -1,7 +1,17 @@
 <div class="grid">
   <div class="cadastro-tabela">
     <form class="campo-cadastro" [formGroup]="form" (ngSubmit)="cadastrar()">
-      <h1 class="titulo-cadastro">CADASTRAR PRODUTO</h1>
+      <div class="imagemComTexto">
+        <img
+          class="imgtext"
+          src="../../assets/046-groceries.png"
+          alt="Girl in a jacket"
+          width="100"
+          height="100"
+        />
+        <h1 class="textoH1" class="titulo-cadastro">CADASTRAR PRODUTO</h1>
+      </div>
+
       <input
         formControlName="nome"
         placeholder="Nome"
@@ -27,18 +37,59 @@
   <div class="cadastro-tabela">
     <table>
       <tr class="tabela">
+        <th></th>
         <th>NOME</th>
         <th>PREÇO</th>
         <th>TIPO</th>
         <th></th>
       </tr>
       <tr *ngFor="let produto of produtos" class="subTabela">
+        <td>
+          <div *ngIf="produto.tipo === 'HIGIENE'">
+            <img
+              src="../../assets/higiene.png"
+              alt="Girl in a jacket"
+              width="30"
+              height="30"
+            />
+          </div>
+          <div *ngIf="produto.tipo === 'BELEZA_PERFUMARIA'">
+            <img
+              src="../../assets/perfume.png"
+              alt="Girl in a jacket"
+              width="30"
+              height="30"
+            />
+          </div>
+          <div *ngIf="produto.tipo === 'MERCEARIA'">
+            <img
+              src="../../assets/mercearia.png"
+              alt="Girl in a jacket"
+              width="30"
+              height="30"
+            />
+          </div>
+        </td>
         <td>{{ produto.nome }}</td>
         <td>{{ produto.preco | currency: "BRL" }}</td>
         <td>{{ produto.tipo }}</td>
         <td>
-          <button (click)="editar(produto)">Editar</button>
-          <button (click)="apagar(produto)">Excluir</button>
+          <button (click)="editar(produto)">
+            <img
+              src="../../assets/editar.png"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
+          </button>
+          <button (click)="apagar(produto)">
+            <img
+              src="../../assets/excluir.png"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
+          </button>
         </td>
       </tr>
     </table>

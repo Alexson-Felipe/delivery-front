@@ -7,7 +7,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(210, 197, 197);
 }
 
 .grid {
@@ -32,9 +32,11 @@ body {
     }
 
     .tabela {
+
       tr,
       th,
       td {
+
         text-align: center;
         font-size: 20px;
         font-family: "Staatliches", cursive;
@@ -49,6 +51,12 @@ body {
       td {
 
         padding: 3px 6px;
+
+        img{
+          display: flex;
+          flex-flow: row wrap;
+
+        }
 
       }
     }
@@ -99,13 +107,17 @@ table {
   width: 550px;
   margin-bottom: 0.5em;
   text-align: center;
+
 }
 
 button {
   background-color: rgb(222, 222, 222);
   padding: 10px;
   margin: 5px;
-  border: solid 1px #ccc;
+  border-bottom: solid 3px #ccc;
+  &:hover {
+    border-bottom: 3px rgb(198, 67, 61) solid;
+  }
 
 }
 
@@ -113,4 +125,15 @@ button {
   display: contents;
   padding: 10px;
   margin: 5px;
+}
+
+.imagemComTexto{
+  display: flex;
+ flex-flow: row wrap;
+ // margin-top: 90px;
+ .textoH1{
+    text-align: center;
+
+ }
+
 }
