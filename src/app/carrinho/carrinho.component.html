@@ -100,50 +100,57 @@
         </td>
 
         <td>
-          <button
-            class="imagemButton"
-            *ngIf="
-              carrinho.status === 'VAZIO' ||
-              carrinho.status === 'AGUARDANDO_PAGAMENTO'
-            "
-            (click)="mostrarModal(carrinho)"
-          >
-            <img
-              src="../../assets/cestinha.png"
-              alt="Girl in a jacket"
-              width="20"
-              height="20"
-            />
-          </button>
+          <div>
+            <button
+              class="imagemButton"
+              *ngIf="
+                carrinho.status === 'VAZIO' ||
+                carrinho.status === 'AGUARDANDO_PAGAMENTO'
+              "
+              (click)="mostrarModal(carrinho)"
+            >
+              <img
+                src="../../assets/cestinha.png"
+                alt="Girl in a jacket"
+                width="20"
+                height="20"
+              />
+            </button>
 
-          <button
-            class="imagemButton"
-            *ngIf="
-              carrinho.status === 'VAZIO' ||
-              carrinho.status === 'AGUARDANDO_PAGAMENTO'
-            "
-            (click)="pagar()"
-            (click)="apagar(carrinho)"
-          >
-            <img
-              src="../../assets/excluir.png"
-              alt="Girl in a jacket"
-              width="20"
-              height="20"
-            />
-          </button>
-          <button
-            class="imagemButton"
-            *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
-            (click)="mostrarModalPagar(carrinho)"
-          >
-            <img
-              src="../../assets/cartao.png"
-              alt="Girl in a jacket"
-              width="20"
-              height="20"
-            />
-          </button>
+            <button
+              class="imagemButton"
+              *ngIf="
+                carrinho.status === 'VAZIO' ||
+                carrinho.status === 'AGUARDANDO_PAGAMENTO'
+              "
+              (click)="pagar()"
+              (click)="apagar(carrinho)"
+            >
+              <img
+                src="../../assets/excluir.png"
+                alt="Girl in a jacket"
+                width="20"
+                height="20"
+              />
+            </button>
+            <button
+              class="imagemButton"
+              *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
+              (click)="mostrarModalPagar(carrinho)"
+            >
+              <img
+                src="../../assets/cartao.png"
+                alt="Girl in a jacket"
+                width="20"
+                height="20"
+              />
+            </button>
+          </div>
+          <div>----</div>
+          <div>
+            <button>+</button>
+            <button>-</button>
+          </div>
         </td>
       </tr>
     </table>

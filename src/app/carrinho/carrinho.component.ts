@@ -140,7 +140,6 @@ export class CarrinhoComponent implements OnInit {
   pagar(): void {
     if (this.formPagar.valid) {
       const idCarrinho = this.formPagar.controls['id'].value;
-      console.log(idCarrinho);
       const formaPagamentoEnum =
         this.formPagar.controls['formaPagamentoEnum'].value;
 
