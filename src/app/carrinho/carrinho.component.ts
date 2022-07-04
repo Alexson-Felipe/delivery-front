@@ -84,6 +84,14 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
+  addMaisProduto(carrinho: Carrinho): void {
+    console.log('addMaisproduto');
+    this.formAddProduto.controls['id'].setValue(carrinho.id);
+    console.log(carrinho.id);
+    console.log(carrinho.produtos);
+    this.add();
+  }
+
   mostrarModal(carrinho: Carrinho): void {
     this.ativarModal();
     this.formAddProduto.controls['id'].setValue(carrinho.id);
@@ -115,7 +123,9 @@ export class CarrinhoComponent implements OnInit {
   }
 
   add(): void {
+    console.log('Entrou antes do if');
     if (this.formAddProduto.valid) {
+      console.log('add');
       const idCarrinho = this.formAddProduto.controls['id'].value;
       const idProduto = this.formAddProduto.controls['idProduto'].value;
 
@@ -127,6 +137,8 @@ export class CarrinhoComponent implements OnInit {
         });
     }
   }
+
+  removerUm(): void {}
 
   apagar(carrinho: Carrinho): void {
     this.carrinhoService.remover(carrinho.id).subscribe((domain: Carrinho) => {

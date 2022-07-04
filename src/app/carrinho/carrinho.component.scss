@@ -3,7 +3,7 @@
   //top: 400px;
   //left: 15vw;
   left: 15.4688vw !important;
-top: 456px !important;
+  top: 456px !important;
   background-color: rgb(234, 79, 71);
   padding: 50px;
   border-bottom: 5px rgb(198, 67, 61) solid;
@@ -13,5 +13,41 @@ top: 456px !important;
     font-size: 20px;
     font-family: "Titan One", cursive;
     text-align: center;
+  }
+}
+
+.test {
+  padding-bottom: 35px;
+}
+
+table {
+  .preco-qtd {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100px;
+    text-align: center;
+    .pre-qtd {
+      text-align: center;
+      margin: 0px auto;
+    }
+  }
+  .preco-qtdaddrem {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 60px;
+    text-align: center;
+    .pre-qtdaddrem {
+      text-align: center;
+      margin: 0px auto;
+
+      .add-rem {
+        text-decoration: double;
+        display: flexbox;
+        border-style: hidden;
+        &:hover {
+          background-color: rgb(234, 79, 71);
+        }
+      }
+    }
   }
 }

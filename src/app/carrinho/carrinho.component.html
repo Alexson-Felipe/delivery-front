@@ -29,132 +29,193 @@
         <th>STATUS</th>
         <th>TOTAL</th>
         <th></th>
+        <th></th>
       </tr>
 
       <tr *ngFor="let carrinho of carrinhos">
         <td>
           {{ carrinho.cliente.nome }}
+
           <tr>
-            <th>NOME PRODUTO</th>
-            <!--nome-->
+            <div class="preco-qtd">
+              <div class="pre-qtd">
+                <th>
+                  <p>PRODUTO</p>
+                </th>
+              </div>
+            </div>
           </tr>
 
           <tr *ngFor="let produto of carrinho.produtos">
-            <td *ngIf="produto.tipo === 'MERCEARIA'">
-              <img
-                src="../../assets/mercearia.png"
-                alt="Girl in a jacket"
-                width="15"
-                height="15"
-              />
-              {{ produto.nome }}
-            </td>
-            <td *ngIf="produto.tipo === 'BELEZA_PERFUMARIA'">
-              <img
-                src="../../assets/perfume.png"
-                alt="Girl in a jacket"
-                width="15"
-                height="15"
-              />
-              {{ produto.nome }}
-            </td>
-            <td *ngIf="produto.tipo === 'HIGIENE'">
-              <img
-                src="../../assets/higiene.png"
-                alt="Girl in a jacket"
-                width="15"
-                height="15"
-              />
-              {{ produto.nome }}
-            </td>
+            <div class="preco-qtd">
+              <div class="pre-qtd">
+                <td *ngIf="produto.tipo === 'MERCEARIA'">
+                  <img
+                    src="../../assets/mercearia.png"
+                    alt="Girl in a jacket"
+                    width="15"
+                    height="15"
+                  />
+                  {{ produto.nome }}
+                </td>
+                <td *ngIf="produto.tipo === 'BELEZA_PERFUMARIA'">
+                  <img
+                    src="../../assets/perfume.png"
+                    alt="Girl in a jacket"
+                    width="15"
+                    height="15"
+                  />
+                  {{ produto.nome }}
+                </td>
+                <td *ngIf="produto.tipo === 'HIGIENE'">
+                  <img
+                    src="../../assets/higiene.png"
+                    alt="Girl in a jacket"
+                    width="15"
+                    height="15"
+                  />
+                  {{ produto.nome }}
+                </td>
+              </div>
+            </div>
           </tr>
+
           <hr />
         </td>
 
         <td>
           {{ carrinho.status }}
+
           <tr>
-            <th>PREÇO</th>
-            <!--PREÇO-->
+            <div class="preco-qtd">
+              <div class="pre-qtd">
+                <th>
+                  <p>PREÇO</p>
+                </th>
+              </div>
+              <div class="pre-qtd">
+                <th>
+                  <p>QTD</p>
+                </th>
+              </div>
+            </div>
           </tr>
+
           <tr *ngFor="let produto of carrinho.produtos">
-            <td>
-              {{ produto.preco | currency: "BRL" }}
-            </td>
+            <div class="preco-qtd">
+              <div class="pre-qtd">
+                <td>
+                  {{ produto.preco | currency: "BRL" }}
+                </td>
+              </div>
+              <div class="pre-qtd">
+                <td>{{ carrinho.qtdProdutos }}</td>
+              </div>
+            </div>
           </tr>
+
           <hr />
         </td>
 
         <td>
           {{ carrinho.total | currency: "BRL" }}
+
           <tr>
-            <th>TIPO</th>
-            <!--tipo-->
+            <div class="preco-qtd">
+              <div class="pre-qtd">
+                <th>
+                  <p>TIPO</p>
+                </th>
+              </div>
+            </div>
           </tr>
           <tr *ngFor="let produto of carrinho.produtos">
-            <td>
-              {{ produto.tipo }}
-            </td>
+            <div class="dentro-button">
+              <td>
+                {{ produto.tipo }}
+              </td>
+              <td></td>
+            </div>
           </tr>
           <hr />
         </td>
 
         <td>
-          <div>
-            <button
-              class="imagemButton"
-              *ngIf="
-                carrinho.status === 'VAZIO' ||
-                carrinho.status === 'AGUARDANDO_PAGAMENTO'
-              "
-              (click)="mostrarModal(carrinho)"
-            >
-              <img
-                src="../../assets/cestinha.png"
-                alt="Girl in a jacket"
-                width="20"
-                height="20"
-              />
-            </button>
+          <tr>
+            <th class="test"></th>
+          </tr>
+          <tr *ngFor="let produto of carrinho.produtos">
+            <div class="preco-qtdaddrem">
+              <div class="pre-qtdaddrem">
+                <td
+                  *ngIf="
+                    carrinho.status === 'VAZIO' ||
+                    carrinho.status === 'AGUARDANDO'
+                  "
+                >
+                  <button class="add-rem" (click)="addMaisProduto(carrinho)">
+                    +
+                  </button>
+                  <button class="add-rem" (click)="removerUm()">-</button>
+                </td>
+              </div>
+            </div>
+          </tr>
+        </td>
 
-            <button
-              class="imagemButton"
-              *ngIf="
-                carrinho.status === 'VAZIO' ||
-                carrinho.status === 'AGUARDANDO_PAGAMENTO'
-              "
-              (click)="pagar()"
-              (click)="apagar(carrinho)"
-            >
-              <img
-                src="../../assets/excluir.png"
-                alt="Girl in a jacket"
-                width="20"
-                height="20"
-              />
-            </button>
-            <button
-              class="imagemButton"
-              *ngIf="carrinho.status === 'AGUARDANDO_PAGAMENTO'"
-              (click)="mostrarModalPagar(carrinho)"
-            >
-              <img
-                src="../../assets/cartao.png"
-                alt="Girl in a jacket"
-                width="20"
-                height="20"
-              />
-            </button>
-          </div>
-          <div>----</div>
-          <div>
-            <button>+</button>
-            <button>-</button>
-          </div>
+        <td>
+          <button
+            class="imagemButton"
+            *ngIf="
+              carrinho.status === 'VAZIO' || carrinho.status === 'AGUARDANDO'
+            "
+            (click)="mostrarModal(carrinho)"
+          >
+            <img
+              src="../../assets/cestinha.png"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
+          </button>
+
+          <button
+            class="imagemButton"
+            *ngIf="
+              carrinho.status === 'VAZIO' || carrinho.status === 'AGUARDANDO'
+            "
+            (click)="pagar()"
+            (click)="apagar(carrinho)"
+          >
+            <img
+              src="../../assets/excluir.png"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
+          </button>
+          <button
+            class="imagemButton"
+            *ngIf="carrinho.status === 'AGUARDANDO'"
+            (click)="mostrarModalPagar(carrinho)"
+          >
+            <img
+              src="../../assets/cartao.png"
+              alt="Girl in a jacket"
+              width="20"
+              height="20"
+            />
+          </button>
         </td>
       </tr>
     </table>
   </div>
+
+  <form
+    *ngIf="formAddProduto.controls['id'].value"
+    [formGroup]="formAddProduto"
+    (ngSubmit)="add()"
+  ></form>
 
   <form
     *ngIf="formAddProduto.controls['id'].value && modal"

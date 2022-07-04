@@ -22,9 +22,7 @@ body {
       font-weight: bold;
     }
     button {
-      padding: 6px;
       font-weight: bold;
-      font-size: 18px;
     }
     hr {
       border: none;
@@ -32,41 +30,19 @@ body {
     }
 
     .tabela {
-
-      tr,
-      th,
-      td {
-
+      th {
         text-align: center;
         font-size: 20px;
         font-family: "Staatliches", cursive;
         color: white;
         border-bottom: solid 5px rgb(234, 79, 71);
-        background-color:rgb(234, 79, 71);
+        background-color: rgb(234, 79, 71);
         &:hover {
           border-bottom: 5px rgb(198, 67, 61) solid;
         }
       }
-      th,
-      td {
-
-        padding: 3px 6px;
-
-        img{
-          display: flex;
-          flex-flow: row wrap;
-
-        }
-
-      }
     }
-
-    .subTabela{
-      text-align: center;
-      background-color:rgb(248, 154, 149);
-    }
-
-    hr{
+    hr {
       border: 5px solid rgb(234, 79, 71);
     }
   }
@@ -86,7 +62,7 @@ body {
       width: 400px;
       margin: 10px auto;
       display: block;
-      padding: 6px;
+      padding: 3px;
       font-size: 18px;
     }
     .ng-touched.ng-invalid {
@@ -107,33 +83,27 @@ table {
   width: 550px;
   margin-bottom: 0.5em;
   text-align: center;
-
 }
 
 button {
-  background-color: rgb(222, 222, 222);
-  padding: 10px;
-  margin: 5px;
-  border-bottom: solid 3px #ccc;
-  &:hover {
-    border-bottom: 3px rgb(198, 67, 61) solid;
+  .botoes-principal {
+    background-color: rgb(222, 222, 222);
+    margin: 5px;
+    &:hover {
+      border-bottom: 3px rgb(198, 67, 61) solid;
+    }
   }
-
 }
 
-.imagemButton{
+.imagemButton {
   display: contents;
-  padding: 10px;
-  margin: 5px;
 }
 
-.imagemComTexto{
+.imagemComTexto {
   display: flex;
- flex-flow: row wrap;
- // margin-top: 90px;
- .textoH1{
+  flex-flow: row wrap;
+  // margin-top: 90px;
+  .textoH1 {
     text-align: center;
-
- }
-
+  }
 }
