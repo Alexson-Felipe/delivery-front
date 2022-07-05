@@ -1,3 +1,4 @@
+import { ItemCarrinho } from './../domain/ItemCarrinho';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -24,6 +25,7 @@ export class CarrinhoComponent implements OnInit {
   carrinhos: Carrinho[] = [];
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
+  itemCarrinho: ItemCarrinho[] = [];
   modal: boolean = false;
   modalPagar: boolean = false;
 
@@ -85,10 +87,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   addMaisProduto(carrinho: Carrinho): void {
-    console.log('addMaisproduto');
     this.formAddProduto.controls['id'].setValue(carrinho.id);
-    console.log(carrinho.id);
-    console.log(carrinho.produtos);
     this.add();
   }
 
@@ -123,9 +122,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   add(): void {
-    console.log('Entrou antes do if');
     if (this.formAddProduto.valid) {
-      console.log('add');
       const idCarrinho = this.formAddProduto.controls['id'].value;
       const idProduto = this.formAddProduto.controls['idProduto'].value;
 

@@ -46,35 +46,35 @@
             </div>
           </tr>
 
-          <tr *ngFor="let produto of carrinho.produtos">
+          <tr *ngFor="let item of carrinho.itens">
             <div class="preco-qtd">
               <div class="pre-qtd">
-                <td *ngIf="produto.tipo === 'MERCEARIA'">
+                <td *ngIf="item.produto.tipo === 'MERCEARIA'">
                   <img
                     src="../../assets/mercearia.png"
                     alt="Girl in a jacket"
                     width="15"
                     height="15"
                   />
-                  {{ produto.nome }}
+                  {{ item.produto.nome }}
                 </td>
-                <td *ngIf="produto.tipo === 'BELEZA_PERFUMARIA'">
+                <td *ngIf="item.produto.tipo === 'BELEZA_PERFUMARIA'">
                   <img
                     src="../../assets/perfume.png"
                     alt="Girl in a jacket"
                     width="15"
                     height="15"
                   />
-                  {{ produto.nome }}
+                  {{ item.produto.nome }}
                 </td>
-                <td *ngIf="produto.tipo === 'HIGIENE'">
+                <td *ngIf="item.produto.tipo === 'HIGIENE'">
                   <img
                     src="../../assets/higiene.png"
                     alt="Girl in a jacket"
                     width="15"
                     height="15"
                   />
-                  {{ produto.nome }}
+                  {{ item.produto.nome }}
                 </td>
               </div>
             </div>
@@ -101,15 +101,15 @@
             </div>
           </tr>
 
-          <tr *ngFor="let produto of carrinho.produtos">
+          <tr *ngFor="let item of carrinho.itens">
             <div class="preco-qtd">
               <div class="pre-qtd">
                 <td>
-                  {{ produto.preco | currency: "BRL" }}
+                  {{ item.produto.preco | currency: "BRL" }}
                 </td>
               </div>
               <div class="pre-qtd">
-                <td>{{ produto.quantProdutos }}</td>
+                <td>{{ item.qtd }}</td>
               </div>
             </div>
           </tr>
@@ -129,10 +129,10 @@
               </div>
             </div>
           </tr>
-          <tr *ngFor="let produto of carrinho.produtos">
+          <tr *ngFor="let item of carrinho.itens">
             <div class="dentro-button">
               <td>
-                {{ produto.tipo }}
+                {{ item.produto.tipo }}
               </td>
               <td></td>
             </div>
@@ -140,11 +140,11 @@
           <hr />
         </td>
 
-        <td>
+        <td class="addERem">
           <tr>
             <th class="test"></th>
           </tr>
-          <tr *ngFor="let produto of carrinho.produtos">
+          <tr *ngFor="let produto of carrinho.itens">
             <div class="preco-qtdaddrem">
               <div class="pre-qtdaddrem">
                 <td
@@ -153,7 +153,11 @@
                     carrinho.status === 'AGUARDANDO'
                   "
                 >
-                  <button class="add-rem" (click)="addMaisProduto(carrinho)">
+                  <button
+                    [disabled]="formAddProduto.valid"
+                    class="add-rem"
+                    (click)="addMaisProduto(carrinho)"
+                  >
                     +
                   </button>
                   <button class="add-rem" (click)="removerUm()">-</button>

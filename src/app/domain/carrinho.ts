@@ -1,9 +1,9 @@
 import { Cliente } from './cliente';
-import { Produto } from './produto';
+import { ItemCarrinho } from './ItemCarrinho';
 
 export interface Carrinho {
   id: string;
-  produtos: Produto[];
+  itens: ItemCarrinho[];
   cliente: Cliente;
   status: string;
   total: string;
