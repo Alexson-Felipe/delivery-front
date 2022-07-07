@@ -142,9 +142,9 @@
 
         <td class="addERem">
           <tr>
-            <th class="test"></th>
+            <th class="espacobotao"></th>
           </tr>
-          <tr *ngFor="let produto of carrinho.itens">
+          <tr *ngFor="let item of carrinho.itens">
             <div class="preco-qtdaddrem">
               <div class="pre-qtdaddrem">
                 <td
@@ -153,14 +153,29 @@
                     carrinho.status === 'AGUARDANDO'
                   "
                 >
-                  <button
-                    [disabled]="formAddProduto.valid"
-                    class="add-rem"
-                    (click)="addMaisProduto(carrinho)"
-                  >
-                    +
-                  </button>
-                  <button class="add-rem" (click)="removerUm()">-</button>
+                  <div>
+                    <form [formGroup]="formAddQuantidade" (ngSubmit)="add()">
+                      <button
+                        class="add-rem"
+                        value="{{ item.produto.id }}"
+                        (click)="addMaisProduto(item.produto.id, carrinho)"
+                      >
+                        +
+                      </button>
+                    </form>
+                    <form
+                      [formGroup]="formRemQuantidade"
+                      (ngSubmit)="removerUm()"
+                    >
+                      <button
+                        class="add-rem"
+                        value="{{ item.id }}"
+                        (click)="remProduto(item.id, carrinho)"
+                      >
+                        -
+                      </button>
+                    </form>
+                  </div>
                 </td>
               </div>
             </div>
@@ -214,12 +229,6 @@
       </tr>
     </table>
   </div>
-
-  <form
-    *ngIf="formAddProduto.controls['id'].value"
-    [formGroup]="formAddProduto"
-    (ngSubmit)="add()"
-  ></form>
 
   <form
     *ngIf="formAddProduto.controls['id'].value && modal"

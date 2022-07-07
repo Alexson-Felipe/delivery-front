@@ -21,11 +21,16 @@ export class CarrinhoService {
   }
 
   adicionarProduto(id: string, idProduto: string): Observable<Carrinho> {
-    console.log('teste');
     return this.http.put<Carrinho>(this.url + 'adicionar-produtos/' + id, {
       idProduto: idProduto,
 
       //idProdutos: [idProduto],
+    });
+  }
+
+  removerProduto(id: string, idItemCarrinho: string): Observable<Carrinho> {
+    return this.http.put<Carrinho>(this.url + 'remover-produto/' + id, {
+      idItemCarrinho: idItemCarrinho,
     });
   }
 

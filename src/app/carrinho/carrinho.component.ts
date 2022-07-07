@@ -1,4 +1,3 @@
-import { ItemCarrinho } from './../domain/ItemCarrinho';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -12,6 +11,7 @@ import { Cliente } from '../domain/cliente';
 import { ClienteModel } from '../model/cliente-model';
 import { CarrinhoService } from '../service/carrinho.service';
 import { ClienteService } from '../service/cliente.service';
+import { ItemCarrinho } from './../domain/ItemCarrinho';
 import { Produto } from './../domain/produto';
 import { ProdutoService } from './../service/produto.service';
 
@@ -41,6 +41,16 @@ export class CarrinhoComponent implements OnInit {
   formAddProduto: FormGroup = this.formBuilder.group({
     id: new FormControl('', [Validators.required]),
     idProduto: new FormControl('', [Validators.required]),
+  });
+
+  formAddQuantidade: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    idProdutoQtd: new FormControl('', [Validators.required]),
+  });
+
+  formRemQuantidade: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    idItemCarrinho: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -86,9 +96,19 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
-  addMaisProduto(carrinho: Carrinho): void {
+  addMaisProduto(codigoProduto: string, carrinho: Carrinho): void {
+    this.modal = false;
     this.formAddProduto.controls['id'].setValue(carrinho.id);
-    this.add();
+    this.formAddProduto.controls['idProduto'].setValue(codigoProduto);
+    // this.add();
+  }
+
+  remProduto(itemCarrinhoId: string, carrinho: Carrinho): void {
+    this.modal = false;
+    this.formRemQuantidade.controls['id'].setValue(carrinho.id);
+    this.formRemQuantidade.controls['idItemCarrinho'].setValue(itemCarrinhoId);
+    console.log(itemCarrinhoId);
+    // this.add();
   }
 
   mostrarModal(carrinho: Carrinho): void {
@@ -135,7 +155,20 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
-  removerUm(): void {}
+  removerUm(): void {
+    if (this.formRemQuantidade.valid) {
+      const idCarrinho = this.formRemQuantidade.controls['id'].value;
+      const idItemCarrinho =
+        this.formRemQuantidade.controls['idItemCarrinho'].value;
+
+      this.carrinhoService
+        .removerProduto(idCarrinho, idItemCarrinho)
+        .subscribe(() => {
+          this.consultarCarrinhos();
+          this.formRemQuantidade.reset();
+        });
+    }
+  }
 
   apagar(carrinho: Carrinho): void {
     this.carrinhoService.remover(carrinho.id).subscribe((domain: Carrinho) => {
