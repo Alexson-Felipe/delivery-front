@@ -100,7 +100,6 @@ export class CarrinhoComponent implements OnInit {
     this.modal = false;
     this.formAddProduto.controls['id'].setValue(carrinho.id);
     this.formAddProduto.controls['idProduto'].setValue(codigoProduto);
-    // this.add();
   }
 
   remProduto(itemCarrinhoId: string, carrinho: Carrinho): void {
@@ -108,7 +107,6 @@ export class CarrinhoComponent implements OnInit {
     this.formRemQuantidade.controls['id'].setValue(carrinho.id);
     this.formRemQuantidade.controls['idItemCarrinho'].setValue(itemCarrinhoId);
     console.log(itemCarrinhoId);
-    // this.add();
   }
 
   mostrarModal(carrinho: Carrinho): void {
