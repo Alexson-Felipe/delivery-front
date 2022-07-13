@@ -15,7 +15,7 @@ import { ProdutoService } from '../service/produto.service';
   styleUrls: ['./produto.component.scss'],
 })
 export class ProdutoComponent implements OnInit {
-  produtos: Produto[] = [];
+  produtos: ProdutoModel[] = [];
   controlador: boolean = true;
 
   form: FormGroup = this.formBuilder.group({
@@ -35,7 +35,7 @@ export class ProdutoComponent implements OnInit {
   }
 
   private carregarLista() {
-    this.produtoService.consultar().subscribe((domains: Produto[]) => {
+    this.produtoService.consultar().subscribe((domains: ProdutoModel[]) => {
       if (domains) {
         this.produtos = domains;
       }
@@ -47,35 +47,41 @@ export class ProdutoComponent implements OnInit {
     const produto: ProdutoModel = this.form.getRawValue(); // transforma tudo do form em Json
 
     if (id) {
-      this.produtoService.alterar(id, produto).subscribe((domain: Produto) => {
+      this.produtoService
+        .alterar(id, produto)
+        .subscribe((domain: ProdutoModel) => {
+          if (domain.id) {
+            this.carregarLista();
+            this.form.reset();
+          }
+        });
+    } else {
+      this.produtoService
+        .cadastrar(produto)
+        .subscribe((domain: ProdutoModel) => {
+          if (domain.id) {
+            this.produtos.push(domain);
+            this.form.reset();
+          }
+        });
+    }
+  }
+
+  editar(produtoModel: ProdutoModel): void {
+    this.form.controls['id'].setValue(produtoModel.id);
+    this.form.controls['nome'].setValue(produtoModel.nome);
+    this.form.controls['preco'].setValue(produtoModel.preco);
+    this.form.controls['tipo'].setValue(produtoModel.tipo);
+  }
+
+  apagar(produtoModel: ProdutoModel): void {
+    this.produtoService
+      .remover(produtoModel.id)
+      .subscribe((domain: ProdutoModel) => {
         if (domain.id) {
           this.carregarLista();
           this.form.reset();
         }
       });
-    } else {
-      this.produtoService.cadastrar(produto).subscribe((domain: Produto) => {
-        if (domain.id) {
-          this.produtos.push(domain);
-          this.form.reset();
-        }
-      });
-    }
-  }
-
-  editar(produto: Produto): void {
-    this.form.controls['id'].setValue(produto.id);
-    this.form.controls['nome'].setValue(produto.nome);
-    this.form.controls['preco'].setValue(produto.preco);
-    this.form.controls['tipo'].setValue(produto.tipo);
-  }
-
-  apagar(produto: Produto): void {
-    this.produtoService.remover(produto.id).subscribe((domain: Produto) => {
-      if (domain.id) {
-        this.carregarLista();
-        this.form.reset();
-      }
-    });
   }
 }

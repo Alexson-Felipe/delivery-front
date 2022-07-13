@@ -1,2 +1,3 @@
-export interface CarrinhoModel {
+export interface ItemCarrinhoModel {
+  
 }

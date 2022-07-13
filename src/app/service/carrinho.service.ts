@@ -12,39 +12,42 @@ export class CarrinhoService {
 
   constructor(private http: HttpClient) {}
 
-  cadastrar(model: CarrinhoModel): Observable<Carrinho> {
-    return this.http.post<Carrinho>(this.url + 'cadastrar/', model);
+  cadastrar(model: CarrinhoModel): Observable<CarrinhoModel> {
+    return this.http.post<CarrinhoModel>(this.url + 'cadastrar/', model);
   }
 
-  alterar(id: string, model: CarrinhoModel): Observable<Carrinho> {
-    return this.http.put<Carrinho>(this.url + 'alterar/' + id, model);
+  alterar(id: string, model: CarrinhoModel): Observable<CarrinhoModel> {
+    return this.http.put<CarrinhoModel>(this.url + 'alterar/' + id, model);
   }
 
-  adicionarProduto(id: string, idProduto: string): Observable<Carrinho> {
-    return this.http.put<Carrinho>(this.url + 'adicionar-produtos/' + id, {
+  adicionarProduto(id: string, idProduto: string): Observable<CarrinhoModel> {
+    return this.http.put<CarrinhoModel>(this.url + 'adicionar-produtos/' + id, {
       idProduto: idProduto,
 
       //idProdutos: [idProduto],
     });
   }
 
-  removerProduto(id: string, idItemCarrinho: string): Observable<Carrinho> {
-    return this.http.put<Carrinho>(this.url + 'remover-produto/' + id, {
+  removerProduto(
+    id: string,
+    idItemCarrinho: string
+  ): Observable<CarrinhoModel> {
+    return this.http.put<CarrinhoModel>(this.url + 'remover-produto/' + id, {
       idItemCarrinho: idItemCarrinho,
     });
   }
 
-  pagar(id: string, formaPagamentoEnum: string): Observable<Carrinho> {
-    return this.http.put<Carrinho>(this.url + 'pagar/' + id, {
+  pagar(id: string, formaPagamentoEnum: string): Observable<CarrinhoModel> {
+    return this.http.put<CarrinhoModel>(this.url + 'pagar/' + id, {
       formaPagamentoEnum: formaPagamentoEnum,
     });
   }
 
-  consultar(): Observable<Carrinho[]> {
-    return this.http.get<Carrinho[]>(this.url + 'consultar');
+  consultar(): Observable<CarrinhoModel[]> {
+    return this.http.get<CarrinhoModel[]>(this.url + 'consultar');
   }
 
-  remover(id: string): Observable<Carrinho> {
-    return this.http.delete<Carrinho>(this.url + 'remover/' + id);
+  remover(id: string): Observable<CarrinhoModel> {
+    return this.http.delete<CarrinhoModel>(this.url + 'remover/' + id);
   }
 }

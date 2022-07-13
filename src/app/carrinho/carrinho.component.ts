@@ -7,12 +7,14 @@ import {
 } from '@angular/forms';
 
 import { Carrinho } from '../domain/carrinho';
-import { Cliente } from '../domain/cliente';
+import { CarrinhoModel } from '../model/carrinho-model';
 import { ClienteModel } from '../model/cliente-model';
+import { ItemCarrinhoModel } from '../model/itemcarrinho-model';
+import { ProdutoModel } from '../model/produto-model';
 import { CarrinhoService } from '../service/carrinho.service';
 import { ClienteService } from '../service/cliente.service';
-import { ItemCarrinho } from './../domain/ItemCarrinho';
 import { Produto } from './../domain/produto';
+
 import { ProdutoService } from './../service/produto.service';
 
 @Component({
@@ -22,10 +24,10 @@ import { ProdutoService } from './../service/produto.service';
 })
 export class CarrinhoComponent implements OnInit {
   produto: Produto | undefined;
-  carrinhos: Carrinho[] = [];
-  clientes: Cliente[] = [];
-  produtos: Produto[] = [];
-  itemCarrinho: ItemCarrinho[] = [];
+  carrinhos: CarrinhoModel[] = [];
+  clientes: ClienteModel[] = [];
+  produtos: ProdutoModel[] = [];
+  itemCarrinho: ItemCarrinhoModel[] = [];
   modal: boolean = false;
   modalPagar: boolean = false;
 
@@ -86,8 +88,8 @@ export class CarrinhoComponent implements OnInit {
 
   cadastrar(): void {
     if (this.form.valid) {
-      //const idCliente = this.form.controls['idCliente'].value;
-      const idCliente: ClienteModel = this.form.getRawValue();
+      const idCliente = this.form.controls['idCliente'].value;
+      // const idCliente: ClienteModel = this.form.getRawValue();
 
       this.carrinhoService.cadastrar(idCliente).subscribe(() => {
         this.consultarCarrinhos();
@@ -109,9 +111,9 @@ export class CarrinhoComponent implements OnInit {
     console.log(itemCarrinhoId);
   }
 
-  mostrarModal(carrinho: Carrinho): void {
+  mostrarModal(carrinhoModel: CarrinhoModel): void {
     this.ativarModal();
-    this.formAddProduto.controls['id'].setValue(carrinho.id);
+    this.formAddProduto.controls['id'].setValue(carrinhoModel.id);
   }
 
   fecharModal(): void {
@@ -124,9 +126,9 @@ export class CarrinhoComponent implements OnInit {
     this.formAddProduto.reset();
   }
 
-  mostrarModalPagar(carrinho: Carrinho): void {
+  mostrarModalPagar(carrinhoModel: CarrinhoModel): void {
     this.ativarModalPagar();
-    this.formPagar.controls['id'].setValue(carrinho.id);
+    this.formPagar.controls['id'].setValue(carrinhoModel.id);
   }
 
   fecharModalPagar(): void {
@@ -168,13 +170,15 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
-  apagar(carrinho: Carrinho): void {
-    this.carrinhoService.remover(carrinho.id).subscribe((domain: Carrinho) => {
-      if (domain.id) {
-        this.consultarCarrinhos();
-        this.form.reset();
-      }
-    });
+  apagar(carrinhoModel: CarrinhoModel): void {
+    this.carrinhoService
+      .remover(carrinhoModel.id)
+      .subscribe((domain: CarrinhoModel) => {
+        if (domain.id) {
+          this.consultarCarrinhos();
+          this.form.reset();
+        }
+      });
   }
 
   pagar(): void {

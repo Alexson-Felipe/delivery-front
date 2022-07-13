@@ -1,5 +1,3 @@
-import { ClienteModel } from './../model/cliente-model';
-import { Cliente } from './../domain/cliente';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -7,7 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { ClienteService } from '../service/cliente.service';
+import { ClienteModel } from './../model/cliente-model';
 
 @Component({
   selector: 'app-cliente',
@@ -15,7 +15,7 @@ import { ClienteService } from '../service/cliente.service';
   styleUrls: ['./cliente.component.scss'],
 })
 export class ClienteComponent implements OnInit {
-  clientes: Cliente[] = [];
+  clientes: ClienteModel[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: new FormControl(null),
@@ -34,7 +34,7 @@ export class ClienteComponent implements OnInit {
   }
 
   private carregarCadastrados(): void {
-    this.clienteService.consultar().subscribe((domains: Cliente[]) => {
+    this.clienteService.consultar().subscribe((domains: ClienteModel[]) => {
       if (domains) {
         this.clientes = domains;
       }
@@ -46,34 +46,40 @@ export class ClienteComponent implements OnInit {
     const cliente: ClienteModel = this.form.getRawValue();
 
     if (id) {
-      this.clienteService.alterar(id, cliente).subscribe((domain: Cliente) => {
-        if (domain.id) {
-          this.carregarCadastrados();
-          this.form.reset();
-        }
-      });
+      this.clienteService
+        .alterar(id, cliente)
+        .subscribe((domain: ClienteModel) => {
+          if (domain.id) {
+            this.carregarCadastrados();
+            this.form.reset();
+          }
+        });
     } else {
-      this.clienteService.cadastrar(cliente).subscribe((domain: Cliente) => {
-        if (domain.id) {
-          this.clientes.push(domain);
-          this.form.reset();
-        }
-      });
+      this.clienteService
+        .cadastrar(cliente)
+        .subscribe((domain: ClienteModel) => {
+          if (domain.id) {
+            this.clientes.push(domain);
+            this.form.reset();
+          }
+        });
     }
   }
 
-  editar(cliente: Cliente): void {
-    this.form.controls['id'].setValue(cliente.id);
-    this.form.controls['nome'].setValue(cliente.nome);
-    this.form.controls['cpf'].setValue(cliente.cpf);
+  editar(clienteModel: ClienteModel): void {
+    this.form.controls['id'].setValue(clienteModel.id);
+    this.form.controls['nome'].setValue(clienteModel.nome);
+    this.form.controls['cpf'].setValue(clienteModel.cpf);
     //this.form.controls['senha'].setValue(cliente.senha);
   }
 
-  apagar(cliente: Cliente): void {
-    this.clienteService.remover(cliente.id).subscribe((domain: Cliente) => {
-      if (domain.id) {
-        this.carregarCadastrados();
-      }
-    });
+  apagar(clienteModel: ClienteModel): void {
+    this.clienteService
+      .remover(clienteModel.id)
+      .subscribe((domain: ClienteModel) => {
+        if (domain.id) {
+          this.carregarCadastrados();
+        }
+      });
   }
 }
