@@ -1,0 +1,198 @@
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+
+import { CarrinhoModel } from '../../model/carrinho-model';
+import { Carrinho } from '../domain/carrinho';
+import { CarrinhoService } from '../service/carrinho.service';
+import { ClienteService } from '../service/cliente.service';
+import { Produto } from './../domain/produto';
+
+import { ClienteModel } from '../../model/cliente-model';
+import { ItemCarrinhoModel } from '../../model/itemcarrinho-model';
+import { ProdutoModel } from '../../model/produto-model';
+import { ProdutoService } from '../service/produto.service';
+
+@Component({
+  selector: 'app-carrinho',
+  templateUrl: './carrinho.component.html',
+  styleUrls: ['./carrinho.component.scss'],
+})
+export class CarrinhoComponent implements OnInit {
+  produto: Produto | undefined;
+  carrinhos: CarrinhoModel[] = [];
+  clientes: ClienteModel[] = [];
+  produtos: ProdutoModel[] = [];
+  itemCarrinho: ItemCarrinhoModel[] = [];
+  modal: boolean = false;
+  modalPagar: boolean = false;
+
+  form: FormGroup = this.formBuilder.group({
+    idCliente: new FormControl('', [Validators.required]),
+  });
+
+  formPagar: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    formaPagamentoEnum: new FormControl('', [Validators.required]),
+  });
+
+  formAddProduto: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    idProduto: new FormControl('', [Validators.required]),
+  });
+
+  formAddQuantidade: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    idProdutoQtd: new FormControl('', [Validators.required]),
+  });
+
+  formRemQuantidade: FormGroup = this.formBuilder.group({
+    id: new FormControl('', [Validators.required]),
+    idItemCarrinho: new FormControl('', [Validators.required]),
+  });
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private carrinhoService: CarrinhoService,
+    private clienteService: ClienteService,
+    private produtoService: ProdutoService
+  ) {}
+
+  ngOnInit(): void {
+    this.consultarClientes();
+    this.consultarCarrinhos();
+    this.consultarProdutos();
+  }
+
+  private consultarClientes(): void {
+    this.clienteService.consultar().subscribe((cons) => {
+      this.clientes = cons;
+    });
+  }
+
+  private consultarCarrinhos(): void {
+    this.carrinhoService.consultar().subscribe((cons) => {
+      this.carrinhos = cons;
+    });
+  }
+
+  private consultarProdutos(): void {
+    this.produtoService.consultar().subscribe((cons) => {
+      this.produtos = cons;
+    });
+  }
+
+  cadastrar(): void {
+    if (this.form.valid) {
+      const idCliente = this.form.controls['idCliente'].value;
+      // const idCliente: ClienteModel = this.form.getRawValue();
+
+      this.carrinhoService.cadastrar(idCliente).subscribe(() => {
+        this.consultarCarrinhos();
+        this.form.reset();
+      });
+    }
+  }
+
+  addMaisProduto(codigoProduto: string, carrinho: Carrinho): void {
+    this.modal = false;
+    this.formAddProduto.controls['id'].setValue(carrinho.id);
+    this.formAddProduto.controls['idProduto'].setValue(codigoProduto);
+  }
+
+  remProduto(itemCarrinhoId: string, carrinho: Carrinho): void {
+    this.modal = false;
+    this.formRemQuantidade.controls['id'].setValue(carrinho.id);
+    this.formRemQuantidade.controls['idItemCarrinho'].setValue(itemCarrinhoId);
+    console.log(itemCarrinhoId);
+  }
+
+  mostrarModal(carrinhoModel: CarrinhoModel): void {
+    this.ativarModal();
+    this.formAddProduto.controls['id'].setValue(carrinhoModel.id);
+  }
+
+  fecharModal(): void {
+    this.modal = false;
+    this.formAddProduto.reset();
+  }
+
+  ativarModal(): void {
+    this.modal = true;
+    this.formAddProduto.reset();
+  }
+
+  mostrarModalPagar(carrinhoModel: CarrinhoModel): void {
+    this.ativarModalPagar();
+    this.formPagar.controls['id'].setValue(carrinhoModel.id);
+  }
+
+  fecharModalPagar(): void {
+    this.modal = false;
+    this.formPagar.reset();
+  }
+
+  ativarModalPagar(): void {
+    this.modalPagar = true;
+    this.formPagar.reset();
+  }
+
+  add(): void {
+    if (this.formAddProduto.valid) {
+      const idCarrinho = this.formAddProduto.controls['id'].value;
+      const idProduto = this.formAddProduto.controls['idProduto'].value;
+
+      this.carrinhoService
+        .adicionarProduto(idCarrinho, idProduto)
+        .subscribe(() => {
+          this.consultarCarrinhos();
+          this.formAddProduto.reset(); //VERIFICAR ISSO
+        });
+    }
+  }
+
+  removerUm(): void {
+    if (this.formRemQuantidade.valid) {
+      const idCarrinho = this.formRemQuantidade.controls['id'].value;
+      const idItemCarrinho =
+        this.formRemQuantidade.controls['idItemCarrinho'].value;
+
+      this.carrinhoService
+        .removerProduto(idCarrinho, idItemCarrinho)
+        .subscribe(() => {
+          this.consultarCarrinhos();
+          this.formRemQuantidade.reset();
+        });
+    }
+  }
+
+  apagar(carrinhoModel: CarrinhoModel): void {
+    this.carrinhoService
+      .remover(carrinhoModel.id)
+      .subscribe((domain: CarrinhoModel) => {
+        if (domain.id) {
+          this.consultarCarrinhos();
+          this.form.reset();
+        }
+      });
+  }
+
+  pagar(): void {
+    if (this.formPagar.valid) {
+      const idCarrinho = this.formPagar.controls['id'].value;
+      const formaPagamentoEnum =
+        this.formPagar.controls['formaPagamentoEnum'].value;
+
+      this.carrinhoService
+        .pagar(idCarrinho, formaPagamentoEnum)
+        .subscribe(() => {
+          this.consultarCarrinhos();
+          this.formPagar.reset(); //VERIFICAR ISSO
+        });
+    }
+  }
+}

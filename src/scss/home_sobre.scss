@@ -1,0 +1,17 @@
+.container {
+  // position: fixed;
+  // display: grid;
+  // grid-template-rows: 75vh;
+  // grid-template-areas: "main main";
+  display: grid;
+  grid-template-columns: repeat(1, 3fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 5px;
+  grid-template-areas: "main main";
+}
+
+main {
+  //background: blue;
+  grid-area: main;
+  height: 100vh;
+}

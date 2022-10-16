@@ -1,0 +1,13 @@
+$primary-color: rgb(234, 79, 71);
+$secondary-color: rgb(242, 119, 112);
+$tertiary-color: #ffffff;
+$quaternary-color: blue;
+
+$primary-background-color: #e3e9ff;
+$secondary-background-color: $tertiary-color;
+$tertiary-background-color: $primary-color;
+
+$primary-text-color: $secondary-color;
+$secondary-text-color: $tertiary-color;
+
+$danger-color: #ff002e;

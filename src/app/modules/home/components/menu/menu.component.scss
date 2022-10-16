@@ -1,0 +1,80 @@
+@import "../../../../../scss/theme.scss";
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-template-areas: "header header";
+}
+
+.grid {
+  grid-template-columns: 4fr 1fr;
+  display: grid;
+  grid-template-areas:
+    "titulo-site titulo-site"
+    "menu logado";
+}
+
+.menu {
+  grid-area: menu;
+  background: $primary-color;
+}
+
+.titulo-site {
+  grid-area: titulo-site;
+  position: relative;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 35px;
+    font-family: "Titan One", cursive;
+    text-align: center;
+  }
+}
+
+.logado {
+  grid-area: logado;
+  background: rgb(159, 86, 151);
+}
+
+.grid > .menu {
+  background: rgb(159, 86, 151);
+}
+
+header {
+  background-color: $primary-color;
+  grid-area: header;
+  font-size: 22px;
+  height: 90px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    li {
+      background-color: rgb(222, 222, 222);
+      border: solid 1px #ccc;
+      border-right: none;
+      list-style: none;
+      display: inline-block;
+      border-bottom: 5px rgb(198, 205, 205) solid;
+      &:last-child {
+        border-right: solid 1px #ccc;
+      }
+      &:hover {
+        background-color: rgb(239, 246, 246);
+        color: #333;
+        border-bottom: 5px rgb(198, 67, 61) solid;
+      }
+    }
+  }
+  a {
+    padding: 25px 25px 25px 25px;
+    font-family: "Staatliches", cursive;
+    color: rgb(13, 110, 253);
+    text-decoration: none;
+    height: 100%;
+  }
+}
