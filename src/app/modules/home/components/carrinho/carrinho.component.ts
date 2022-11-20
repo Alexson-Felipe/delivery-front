@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
   FormGroup,
+  FormControl,
   Validators,
+  FormBuilder,
 } from '@angular/forms';
-
 import { CarrinhoModel } from '../../model/carrinho-model';
-import { Carrinho } from '../domain/carrinho';
-import { CarrinhoService } from '../service/carrinho.service';
-import { ClienteService } from '../service/cliente.service';
-import { Produto } from './../domain/produto';
-
 import { ClienteModel } from '../../model/cliente-model';
 import { ItemCarrinhoModel } from '../../model/itemcarrinho-model';
 import { ProdutoModel } from '../../model/produto-model';
+import { Carrinho } from '../domain/carrinho';
+import { Produto } from '../domain/produto';
+import { CarrinhoService } from '../service/carrinho.service';
+import { ClienteService } from '../service/cliente.service';
 import { ProdutoService } from '../service/produto.service';
 
 @Component({
